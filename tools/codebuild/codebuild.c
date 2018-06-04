@@ -229,6 +229,23 @@ struct controller controller_list[] =
       { NULL }
     }
   },
+
+   {
+    "sh1108", 	 20, 	20, 	"u8g2_ll_hvline_vertical_top_lsb", "u8x8_cad_001", "", COM_4WSPI|COM_3WSPI|COM_6800|COM_8080|COM_8080,
+    "Not tested", /* is_generate_u8g2_class= */ 1,
+    {
+      { "160x160" },
+      { NULL }
+    }
+  },
+  {
+    "sh1108", 	 20, 	20, 	"u8g2_ll_hvline_vertical_top_lsb", "u8x8_cad_ssd13xx_i2c", "i2c", COM_I2C,
+    "Not tested", /* is_generate_u8g2_class= */ 1,
+    {
+      { "160x160" },
+      { NULL }
+    }
+  },
   
    {
     "sh1122", 	 32, 	8, 	"u8g2_ll_hvline_horizontal_right_lsb", "u8x8_cad_001", "", COM_4WSPI|COM_3WSPI|COM_6800|COM_8080|COM_8080,
@@ -792,6 +809,8 @@ struct controller controller_list[] =
     "", /* is_generate_u8g2_class= */ 1,
     {
       { "jlx12864" },
+      { "enh_dg128064" },
+      { "enh_dg128064i" },
       { NULL }
     }
   },
@@ -1148,7 +1167,7 @@ struct interface interface_list[] =
   {
     "3W_SW_SPI",
     "u8x8_SetPin_3Wire_SW_SPI",
-    "u8x8_byte_3wire_sw_spi",
+    "u8x8_byte_arduino_3wire_sw_spi",
     "u8x8_gpio_and_delay_arduino",
     "uint8_t clock, uint8_t data, uint8_t cs, uint8_t reset = U8X8_PIN_NONE",
     "clock, data, cs, reset",
@@ -1170,12 +1189,12 @@ struct interface interface_list[] =
   {
     "SW_I2C",
     "u8x8_SetPin_SW_I2C",
-    "u8x8_byte_sw_i2c" /* "u8x8_byte_ssd13xx_sw_i2c" */,
+    "u8x8_byte_arduino_sw_i2c" /* u8x8_byte_sw_i2c */,
     "u8x8_gpio_and_delay_arduino",
     "uint8_t clock, uint8_t data, uint8_t reset = U8X8_PIN_NONE",
     "clock,  data,  reset",
     "clock,  data [,  reset]",
-    "u8x8_byte_sw_i2c" /* "u8x8_byte_ssd13xx_sw_i2c" */
+    "u8x8_byte_sw_i2c" /* u8x8_byte_sw_i2c */
   },
   /* 7 */
   {

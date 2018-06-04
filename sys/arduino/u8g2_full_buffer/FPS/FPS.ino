@@ -196,6 +196,7 @@
 //U8G2_SH1107_128X128_F_4W_HW_SPI u8g2(U8G2_R0, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);
 //U8G2_SH1107_128X128_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ 8);
 //U8G2_SH1107_SEEED_96X96_F_4W_HW_SPI u8g2(U8G2_R0, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);
+//U8G2_SH1108_160X160_F_4W_HW_SPI u8g2(U8G2_R0, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);
 //U8G2_SH1122_256X64_F_4W_HW_SPI u8g2(U8G2_R0, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);				// Enable U8G2_16BIT in u8g2.h
 //U8G2_SSD1306_128X32_UNIVISION_F_SW_I2C u8g2(U8G2_R0, /* clock=*/ 21, /* data=*/ 20, /* reset=*/ U8X8_PIN_NONE);   // Adafruit Feather M0 Basic Proto + FeatherWing OLED
 //U8G2_SSD1306_128X32_UNIVISION_F_SW_I2C u8g2(U8G2_R0, /* clock=*/ SCL, /* data=*/ SDA, /* reset=*/ U8X8_PIN_NONE);   // Adafruit Feather ESP8266/32u4 Boards + FeatherWing OLED
@@ -269,6 +270,10 @@
 //U8G2_ST7567_PI_132X64_F_4W_HW_SPI u8g2(U8G2_R0, /* cs=*/ 7, /* dc=*/ 9, /* reset=*/ 8);  // Pax Instruments Shield, LCD_BL=6
 //U8G2_ST7567_JLX12864_F_4W_SW_SPI u8g2(U8G2_R0, /* clock=*/ 13, /* data=*/ 11, /* cs=*/ 7, /* dc=*/ 9, /* reset=*/ 8);  
 //U8G2_ST7567_JLX12864_F_4W_HW_SPI u8g2(U8G2_R0, /* cs=*/ 7, /* dc=*/ 9, /* reset=*/ 8);  
+//U8G2_ST7567_ENH_DG128064_F_4W_SW_SPI u8g2(U8G2_R0, /* clock=*/ 13, /* data=*/ 11, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8); 
+//U8G2_ST7567_ENH_DG128064_F_4W_HW_SPI u8g2(U8G2_R0, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8); 
+//U8G2_ST7567_ENH_DG128064I_F_4W_SW_SPI u8g2(U8G2_R0, /* clock=*/ 13, /* data=*/ 11, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8); 
+//U8G2_ST7567_ENH_DG128064I_F_4W_HW_SPI u8g2(U8G2_R0, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8); 
 //U8G2_ST75256_JLX172104_F_4W_SW_SPI u8g2(U8G2_R0, /* clock=*/ 13, /* data=*/ 11, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);
 //U8G2_ST75256_JLX172104_F_4W_HW_SPI u8g2(U8G2_R0, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);
 //U8G2_ST75256_JLX256128_F_4W_SW_SPI u8g2(U8G2_R0, /* clock=*/ 13, /* data=*/ 11, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);	// Enable U8g2 16 bit mode for this display
@@ -415,6 +420,11 @@ void draw_pixel(void) {
   }
 }
 
+void draw_line(void) {
+  u8g2.setColorIndex(draw_color);
+  u8g2.drawLine(0,0, u8g2.getWidth()-1, u8g2.getHeight()-1);
+}
+
 // returns unadjusted FPS
 uint16_t execute_with_fps(void (*draw_fn)(void)) {
   uint16_t FPS10 = 0;
@@ -454,6 +464,24 @@ void show_result(const char *s, uint16_t fps) {
 }
 
 void setup(void) {
+  /* U8g2 Project: SSD1306 Test Board */
+  //pinMode(10, OUTPUT);
+  //pinMode(9, OUTPUT);
+  //digitalWrite(10, 0);
+  //digitalWrite(9, 0);		
+
+  /* U8g2 Project: T6963 Test Board */
+  //pinMode(18, OUTPUT);
+  //digitalWrite(18, 1);
+
+  /* U8g2 Project: KS0108 Test Board */
+  //pinMode(16, OUTPUT);
+  //digitalWrite(16, 0);	
+
+  /* U8g2 Project: LC7981 Test Board, connect RW to GND */
+  //pinMode(17, OUTPUT);
+  //digitalWrite(17, 0);	
+
   u8g2.begin();
   // flip screen, if required
   // u8g2.setRot180();
@@ -475,6 +503,9 @@ void loop(void) {
   delay(5000);  
   fps = execute_with_fps(draw_pixel);
   show_result("draw pixel", fps);
+  delay(5000);
+  fps = execute_with_fps(draw_line);
+  show_result("draw line", fps);
   delay(5000);
 }
 
